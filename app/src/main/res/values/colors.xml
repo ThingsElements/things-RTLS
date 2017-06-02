@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <!-- Tap Layout -->
+
+    <color name="tapLayoutBackground">#607D8B</color>
+    <color name="tapLayoutText">#DFE5E7</color>
+    <color name="tapLayoutSelectBackground">#4CAF51</color>
+    <color name="tapLayoutSelectText">#FFFFFF</color>
+    <color name="actionBar">#24527C</color>
+
 </resources>
