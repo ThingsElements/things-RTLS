@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">things-rtls</string>
+
+    <!-- Title -->
+    <string name="title_main_tap">Main</string>
+    <string name="title_gauge_mode">Gauge Mode</string>
+    <string name="title_odometer_mode">Odometer Mode</string>
+</resources>
