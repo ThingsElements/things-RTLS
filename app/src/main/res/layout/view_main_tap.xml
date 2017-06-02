@@ -8,10 +8,10 @@
     tools:context="com.example.hatio.things_rtls.app.MainTap">
 
     <!--Custom Toolbar-->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -24,10 +24,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/tapLayoutBackground" />
-    <!---->
-        <!--app:tabTextColor="@color/tapLayoutText"-->
-        <!--app:tabSelectedTextColor="@color/tapLayoutSelectText"-->
-        <!--app:tabSelctedBackground="@color/tabLayoutSelectBackground"/>-->
-
 
 </LinearLayout>

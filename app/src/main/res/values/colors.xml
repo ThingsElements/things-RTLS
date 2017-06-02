@@ -6,11 +6,24 @@
 
 
     <!-- Tap Layout -->
-
     <color name="tapLayoutBackground">#607D8B</color>
     <color name="tapLayoutText">#DFE5E7</color>
     <color name="tapLayoutSelectBackground">#4CAF51</color>
     <color name="tapLayoutSelectText">#FFFFFF</color>
-    <color name="actionBar">#24527C</color>
+
+
+    <!-- Action Bar -->
+    <color name="actionBarBackground">#24527C</color>
+    <color name="actionBarText">#24527C</color>
+
+    <!-- Odometer Mode -->
+    <color name="odometerGaugeBackground">#4F5050</color>
+    <color name="odometerTextBackground">#656565</color>
+    <color name="odometerNumberText">#FFFFFF</color>
+    <color name="odometerLabelText">#CCCCCC</color>
+
+    <!-- Camera Mode -->
+    <color name="CameraLabelText">#D3D3D3</color>
+    <color name="CameraTextBackground">#656565</color>
 
 </resources>
