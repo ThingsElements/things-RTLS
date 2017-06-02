@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:id="@+id/loTop"
+        android:layout_alignParentTop="true">
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <EditText
+        android:id="@+id/etURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:ems="10"
+        android:hint="Server URL"
+        android:layout_below="@+id/loTop"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/etURL"
+        android:layout_below="@+id/etURL"
+        android:layout_marginTop="17dp"
+        android:text="Login"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

@@ -73,6 +73,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/loBottom"
-        android:text="Sign up" />
+        android:text="Reset Password" />
 
 </RelativeLayout>
