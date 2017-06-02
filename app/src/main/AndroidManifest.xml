@@ -27,6 +27,10 @@
                   android:label="@string/title_main_tap">
         </activity>
 
+        <activity android:name=".app.Login"
+            android:label="@string/title_login">
+        </activity>
+
     </application>
 
 </manifest>

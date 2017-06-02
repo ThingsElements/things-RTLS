@@ -5,4 +5,5 @@
     <string name="title_main_tap">Main</string>
     <string name="title_gauge_mode">Gauge Mode</string>
     <string name="title_odometer_mode">Odometer Mode</string>
+    <string name="title_login">Login</string>
 </resources>
