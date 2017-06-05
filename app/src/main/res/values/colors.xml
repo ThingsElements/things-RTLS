@@ -14,7 +14,7 @@
 
     <!-- Action Bar -->
     <color name="actionBarBackground">#24527C</color>
-    <color name="actionBarText">#24527C</color>
+    <color name="actionBarText">#ffffff</color>
 
     <!-- Odometer Mode -->
     <color name="odometerGaugeBackground">#4F5050</color>

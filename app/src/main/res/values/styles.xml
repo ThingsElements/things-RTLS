@@ -1,8 +1,8 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
+         Customize your theme here.
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -10,15 +10,32 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
 
-        <item name="android:actionBarStyle">@style/ActionBar</item>
-
+        <!--<item name="android:actionBarTheme">@style/ActionBar</item>-->
+        <item name="android:itemTextAppearance">@style/ActionBarMenuText</item>
 
     </style>
+
+
+    <!--<style name="rtlsTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+
+        <!--<item name="android:actionBarStyle">@style/ActionBar</item>-->
+
+        <!--&lt;!&ndash;<item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="android:actionMenuTextColor">@color/actionbar_text</item>&ndash;&gt;-->
+
+    <!--</style>-->
 
     <style name="ActionBar" parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
 
         <item name="android:background">@color/actionBarBackground</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/actionBarText</item>
 
+    </style>
+
+
+    <style name="ActionBarMenuText" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/actionBarBackground</item>
     </style>
 
 </resources>

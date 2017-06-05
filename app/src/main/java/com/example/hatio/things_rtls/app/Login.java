@@ -1,11 +1,10 @@
 package com.example.hatio.things_rtls.app;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.view.*;
 
 import com.example.hatio.things_rtls.R;
 
@@ -13,7 +12,7 @@ import com.example.hatio.things_rtls.R;
  * Created by hatio on 2017. 6. 2..
  */
 
-public class Login extends Activity implements View.OnClickListener {
+public class Login extends ActionBarActivity implements View.OnClickListener {
 
     EditText etEmail, etPassword;
     Button btnLogin, btnRegister, btnResetPwd;

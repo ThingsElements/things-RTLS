@@ -27,26 +27,17 @@ public class GaugeMode extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.view_gauge_mode, container, false);
+        View view = inflater.inflate(R.layout.view_gauge_mode, container, false);
+
+        GaugeView gv = new GaugeView(view.getContext());
+
+        mGaugeView = (GaugeView) view.findViewById(R.id.gauge_view1);
+        tvSpeed = (TextView) view.findViewById(R.id.tv_speed);
+        tvAverageSpeed = (TextView) view.findViewById(R.id.tv_average_speed);
+        mTimer.start();
+
+        return view;
     }
-
-
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.view_gauge_mode);
-//
-//        GaugeView gv = new GaugeView(GaugeMode.this);
-//
-////        setContentView(gv);
-//
-//        mGaugeView = (GaugeView) findViewById(R.id.gauge_view1);
-//        tvSpeed = (TextView) findViewById(R.id.tv_speed);
-//        tvAverageSpeed = (TextView) findViewById(R.id.tv_average_speed);
-//        mTimer.start();
-//
-//    }
 
 
     private final CountDownTimer mTimer = new CountDownTimer(300000, 1000) {
