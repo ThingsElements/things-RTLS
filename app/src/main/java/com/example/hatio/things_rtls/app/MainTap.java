@@ -53,8 +53,8 @@ public class MainTap extends ActionBarActivity {
 
                 switch(tab.getPosition()){
                     case 0:
-//                        setTitle("Camera Mode");
-//                        break;
+                        setTitle("Camera Mode");
+                        break;
                     case 1:
                         setTitle("Odometer Mode");
                         break;

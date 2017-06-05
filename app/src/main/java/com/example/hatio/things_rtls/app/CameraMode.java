@@ -18,15 +18,16 @@ import com.example.hatio.things_rtls.assist.CameraPreview;
 public class CameraMode extends Fragment {
     String TAG = "CAMERA";
     private Context mContext = this.getContext();
-    private Camera mCamera = getCameraInstance();
+    private static Camera mCamera;
     private CameraPreview mPreview;
     private boolean runThread = false;
     public static Toast mToast;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getCameraInstance();
 
 
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -43,13 +44,17 @@ public class CameraMode extends Fragment {
         mContext = this.getContext();
         // 카메라 인스턴스 생성
         if (checkCameraHardware(mContext)) {
-//            mContext = view.getContext();
-            mCamera = getCameraInstance();
+            mContext = view.getContext();
+//            mCamera = getCameraInstance();
 
             // 프리뷰창을 생성하고 액티비티의 레이아웃으로 지정합니다
-            mPreview = new CameraPreview(view.getContext(), mCamera);
-            FrameLayout preview = (FrameLayout) view.findViewById(R.id.camera_preview);
-            preview.addView(mPreview);
+
+            if(mCamera != null) {
+                mPreview = new CameraPreview(view.getContext(), mCamera);
+                FrameLayout preview = (FrameLayout) view.findViewById(R.id.camera_preview);
+                preview.addView(mPreview);
+
+            }
 
         }
 
@@ -74,14 +79,27 @@ public class CameraMode extends Fragment {
     /**
      * 카메라 인스턴스를 안전하게 획득합니다
      */
-    public static Camera getCameraInstance() {
-        Camera c = null;
+    public static void getCameraInstance() {
+        releaseCameraAndPreview();
+
+        int numCams = Camera.getNumberOfCameras();
+        if(numCams == 0)
+            return;
+
         try {
-            c = Camera.open(0);
+            mCamera = Camera.open(0);
         } catch (Exception e) {
             // 사용중이거나 사용 불가능 한 경우
         }
-        return c;
+//        return mCamera;
+    }
+
+    private static void releaseCameraAndPreview() {
+        if (mCamera != null) {
+            mCamera.stopPreview();
+            mCamera.release();
+            mCamera = null;
+        }
     }
 
     @Override
