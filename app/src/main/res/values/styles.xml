@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/actionBarBackground</item>
 
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
@@ -15,15 +16,6 @@
 
     </style>
 
-
-    <!--<style name="rtlsTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-
-        <!--<item name="android:actionBarStyle">@style/ActionBar</item>-->
-
-        <!--&lt;!&ndash;<item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>&ndash;&gt;-->
-        <!--&lt;!&ndash;<item name="android:actionMenuTextColor">@color/actionbar_text</item>&ndash;&gt;-->
-
-    <!--</style>-->
 
     <style name="ActionBar" parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
 

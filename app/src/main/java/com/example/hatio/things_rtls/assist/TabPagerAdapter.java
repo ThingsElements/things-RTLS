@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.hatio.things_rtls.app.GaugeMode;
+import com.example.hatio.things_rtls.app.Setting;
 
 /**
  * Created by hatio on 2017. 6. 1..
@@ -32,8 +33,8 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
                 GaugeMode gaugeMode = new GaugeMode();
                 return gaugeMode;
             case 2:
-                GaugeMode gaugeMode3 = new GaugeMode();
-                return gaugeMode3;
+                Setting setting = new Setting();
+                return setting;
             default:
                  return null;
         }

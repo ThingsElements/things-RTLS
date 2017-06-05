@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#24527C</color>
+    <color name="colorPrimaryDark">#24527C</color>
+    <color name="colorAccent">@color/Cursor</color>
 
 
     <!-- Tap Layout -->
@@ -16,14 +16,20 @@
     <color name="actionBarBackground">#24527C</color>
     <color name="actionBarText">#ffffff</color>
 
+
     <!-- Odometer Mode -->
     <color name="odometerGaugeBackground">#4F5050</color>
     <color name="odometerTextBackground">#656565</color>
     <color name="odometerNumberText">#FFFFFF</color>
     <color name="odometerLabelText">#CCCCCC</color>
 
+
     <!-- Camera Mode -->
     <color name="CameraLabelText">#D3D3D3</color>
     <color name="CameraTextBackground">#656565</color>
+
+
+    <!-- Login -->
+    <color name="Cursor">#44A6E4</color>
 
 </resources>
