@@ -22,16 +22,11 @@ public class MainTap extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_main_tap);
 
-        // Adding Toolbar to the activity
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         // Initializing the TabLayout
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-//        tabLayout.addTab(tabLayout.newTab());
-//        tabLayout.addTab(tabLayout.newTab());
-//        tabLayout.addTab(tabLayout.newTab());
 
+        // 탭에 새로운 뷰를 하나씩 추가.
         View view1 = getLayoutInflater().inflate(R.layout.icon_view_selector_camera, null);
         view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.tab_selector_camera);
         tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
@@ -44,8 +39,8 @@ public class MainTap extends ActionBarActivity {
         view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.tab_selector_setting);
         tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
 
-
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
 
         // Initializing ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -60,11 +55,6 @@ public class MainTap extends ActionBarActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-
-//                tab.getIcon().setColorFilter(Color.parseColor("#a8a8a8"), PorterDuff.Mode.SRC_IN);
-//                TextView txt=(TextView)findViewById(R.id.tabText);
-//                txt.setTextColor(Color.GRAY);
-//                tab.setCustomView();
 
                 switch(tab.getPosition()){
                     case 0:
