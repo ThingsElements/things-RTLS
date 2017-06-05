@@ -3,6 +3,7 @@ package com.example.hatio.things_rtls.app;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.example.hatio.things_rtls.R;
 import com.example.hatio.things_rtls.assist.TabPagerAdapter;
@@ -27,9 +28,23 @@ public class MainTap extends ActionBarActivity {
 
         // Initializing the TabLayout
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Camera"));
-        tabLayout.addTab(tabLayout.newTab().setText("Odometer"));
-        tabLayout.addTab(tabLayout.newTab().setText("Setting"));
+//        tabLayout.addTab(tabLayout.newTab());
+//        tabLayout.addTab(tabLayout.newTab());
+//        tabLayout.addTab(tabLayout.newTab());
+
+        View view1 = getLayoutInflater().inflate(R.layout.icon_view_selector_camera, null);
+        view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.tab_selector_camera);
+        tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
+
+        View view2 = getLayoutInflater().inflate(R.layout.icon_view_selector_odometer, null);
+        view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.tab_selector_odometer);
+        tabLayout.addTab(tabLayout.newTab().setCustomView(view2));
+
+        View view3 = getLayoutInflater().inflate(R.layout.icon_view_selector_setting, null);
+        view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.tab_selector_setting);
+        tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
+
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         // Initializing ViewPager
@@ -49,17 +64,17 @@ public class MainTap extends ActionBarActivity {
 //                tab.getIcon().setColorFilter(Color.parseColor("#a8a8a8"), PorterDuff.Mode.SRC_IN);
 //                TextView txt=(TextView)findViewById(R.id.tabText);
 //                txt.setTextColor(Color.GRAY);
-//                tab.setCustomView(txt);
+//                tab.setCustomView();
 
                 switch(tab.getPosition()){
                     case 0:
-                        setTitle("Camera Mode");
+                        setActionBarTitle("Camera Mode");
                         break;
                     case 1:
-                        setTitle("Odometer Mode");
+                        setActionBarTitle("Odometer Mode");
                         break;
                     case 2:
-                        setTitle("Setting");
+                        setActionBarTitle("Setting");
                         break;
                 }
             }

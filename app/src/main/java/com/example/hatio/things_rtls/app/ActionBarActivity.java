@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.hatio.things_rtls.R;
 
@@ -17,9 +18,9 @@ import com.example.hatio.things_rtls.R;
 
 public class ActionBarActivity extends AppCompatActivity {
 
+    TextView tvTitle;
 
     ///// 상단 서브 메뉴 바 /////
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -36,6 +37,8 @@ public class ActionBarActivity extends AppCompatActivity {
         View actionbar = inflater.inflate(R.layout.action_bar, null);
 
         actionBar.setCustomView(actionbar);
+
+        tvTitle = (TextView)actionbar.findViewById(R.id.title);
 
         //액션바 양쪽 공백 없애기
         Toolbar parent = (Toolbar)actionbar.getParent();
@@ -70,7 +73,9 @@ public class ActionBarActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    public void setActionBarTitle(String title) {
+        tvTitle.setText(title);
+    }
 
 
 }
