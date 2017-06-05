@@ -5,15 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="20dp"
     tools:context=".app.GaugeMode">
 
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/loGauge"
+        android:layout_width="fill_parent"
         android:layout_height="400dp"
         android:orientation="vertical"
-        android:gravity="top" >
+        android:layout_alignParentTop="true"
+        android:background="@color/odometerGaugeBackground">
 
         <com.example.hatio.things_rtls.assist.GaugeView
             android:id="@+id/gauge_view1"
@@ -24,50 +25,59 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/loStatus"
+        android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:gravity="center|top"
-        >
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/loGauge"
+        android:background="@color/odometerTextBackground">
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:textSize="30dp"
-        android:text="속도 :"
-        />
+        <LinearLayout
+            android:id="@+id/loStatusOne"
+            android:layout_width="fill_parent"
+            android:layout_height="60sp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/loGauge">
 
-    <TextView
-        android:id="@+id/tv_speed"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:textSize="30dp"
-        android:text="20km"
-        />
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:textSize="30dp"
+                android:text="평균속도 :"
+                />
+
+            <TextView
+                android:id="@+id/tv_average_speed"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:textSize="30dp"
+                android:text="20km"
+                />
+         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/loStatusTwo"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/loGauge">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/loStatusThree"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/loGauge">
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center|top">
-
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:textSize="30dp"
-            android:text="평균속도 :"
-            />
-
-        <TextView
-            android:id="@+id/tv_average_speed"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:textSize="30dp"
-            android:text="20km"
-            />
-
-    </LinearLayout>
 
 </RelativeLayout>

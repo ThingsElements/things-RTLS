@@ -32,7 +32,7 @@ public class GaugeMode extends Fragment {
         GaugeView gv = new GaugeView(view.getContext());
 
         mGaugeView = (GaugeView) view.findViewById(R.id.gauge_view1);
-        tvSpeed = (TextView) view.findViewById(R.id.tv_speed);
+//        tvSpeed = (TextView) view.findViewById(R.id.tv_speed);
         tvAverageSpeed = (TextView) view.findViewById(R.id.tv_average_speed);
         mTimer.start();
 
@@ -49,8 +49,8 @@ public class GaugeMode extends Fragment {
             count += 1;
 
             mGaugeView.setTargetValue(rndSpeed);
-            tvSpeed.setText(rndSpeed + "km");
-            tvAverageSpeed.setText((averageSpeed / count) + "km");
+//            tvSpeed.setText(rndSpeed + "km");
+//            tvAverageSpeed.setText((averageSpeed / count) + "km");
         }
 
         @Override

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.hatio.things_rtls.R;
 import com.example.hatio.things_rtls.assist.TabPagerAdapter;
@@ -40,6 +42,31 @@ public class MainTap extends ActionBarActivity {
         tabLayout.addTab(tabLayout.newTab().setCustomView(view3));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+
+        //SlidingTabStrip in TabLayout
+        ViewGroup slidingTabStrip0 = (ViewGroup)tabLayout.getChildAt(0);
+        //second tab in SlidingTabStrip
+        View tab0 = slidingTabStrip0.getChildAt(1);
+        LinearLayout.LayoutParams layoutParams0 = (LinearLayout.LayoutParams) tab0.getLayoutParams();
+        layoutParams0.weight = 1.1f;
+        tab0.setLayoutParams(layoutParams0);
+
+//        //SlidingTabStrip in TabLayout
+//        ViewGroup slidingTabStrip1 = (ViewGroup)tabLayout.getChildAt(1);
+//        //second tab in SlidingTabStrip
+//        View tab1 = slidingTabStrip1.getChildAt(1);
+//        LinearLayout.LayoutParams layoutParams1 = (LinearLayout.LayoutParams) tab1.getLayoutParams();
+//        layoutParams1.weight = 4;
+//        tab1.setLayoutParams(layoutParams1);
+//
+//        //SlidingTabStrip in TabLayout
+//        ViewGroup slidingTabStrip2 = (ViewGroup)tabLayout.getChildAt(2);
+//        //second tab in SlidingTabStrip
+//        View tab2 = slidingTabStrip2.getChildAt(1);
+//        LinearLayout.LayoutParams layoutParams2 = (LinearLayout.LayoutParams) tab1.getLayoutParams();
+//        layoutParams2.weight = 3;
+//        tab2.setLayoutParams(layoutParams2);
 
 
         // Initializing ViewPager
