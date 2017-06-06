@@ -59,13 +59,17 @@ public class ActionBarActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent i;
         switch (item.getItemId()) {
             case 0:
+                i = new Intent(this, CVCameraMode.class);
+                startActivity(i);
                 break;
             case 1:
                 break;
             case 2:
-                Intent i = new Intent(this, Login.class);
+                i = new Intent(this, Login.class);
                 startActivity(i);
                 break;
         }

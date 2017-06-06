@@ -1,26 +1,29 @@
 //package com.example.hatio.things_rtls.odometer;
 //
-//
-//import android.app.Activity;
 //import android.os.Bundle;
+//import android.widget.Toast;
 //
 //import com.example.hatio.things_rtls.R;
+//import com.example.hatio.things_rtls.app.ActionBarActivity;
 //
 //import org.opencv.core.Mat;
 //
 //import java.util.concurrent.TimeUnit;
 //
-//public class MonoVo extends Activity {
+//public class MonoVo extends ActionBarActivity {
 //
 //    Camera camera = new Camera();
 ////        Playback playback = new Playback("Road facing camera");
+//private Camera mCamera = new Camera();
+//    private Odometer mOdometer = new Odometer(mCamera.getFocal(), mCamera.getPrinciplePoint());
 //
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.view_monovo);
+//        setContentView(R.layout.view_camera_mode);
 //
+//        Odometer odometer = new Odometer(camera.getFocal(), camera.getPrinciplePoint());
 //        start();
 //    }
 //
@@ -29,9 +32,6 @@
 //    // WARNING: different sequences in the KITTI VO dataset have different intrinsic/extrinsic parameters
 //
 //    void start() {
-//        camera.init();
-//
-//        Odometer odometer = new Odometer(camera.getFocal(), camera.getPrinciplePoint());
 //
 //        double begin = System.currentTimeMillis();
 //
@@ -57,6 +57,8 @@
 //
 //        double elapsed_secs = (double) ((end - begin) / 1000);
 //        System.out.printf("Total time taken: " + elapsed_secs + "s");
+//
+//        Toast.makeText(getApplicationContext(), "OpenCV end", Toast.LENGTH_LONG).show();
 //
 //    }
 //

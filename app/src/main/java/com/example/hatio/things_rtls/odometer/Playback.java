@@ -1,30 +1,59 @@
-//package com.example.hatio.things_rtls.odometer;
-//
-//public class Playback {
-//
-////
-////    String name = null;
-////
-////    Playback(String name) {
-////        bzero(this.name, 100);
-////        strncpy(this.name, name, strlen(name));
-////        namedWindow(this.name, WINDOW_AUTOSIZE);
-////    }
-////
-////    int redraw(Mat image, MatOfPoint2f prevFeatures, MatOfPoint2f currFeatures) {
-////
-////        if(prevFeatures.size() == currFeatures.size()) {
-////
-////            for(int i = 0;i < prevFeatures.toArray().length;i++) {
-////                Point prev = prevFeatures.toArray()[i];
-////                Point curr = currFeatures.toArray()[i];
-////
-////                line(image, prev, curr, CV_RGB(0, 255, 0));
-////            }
-////        }
-////
-////        imshow(name, image);
-////        return 0;
-////    }
-//
-//}
+package com.example.hatio.things_rtls.odometer;
+
+
+import android.os.Environment;
+
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.videoio.VideoCapture;
+
+import static org.opencv.imgcodecs.Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE;
+import static org.opencv.imgcodecs.Imgcodecs.imread;
+
+public class Playback {
+
+    static VideoCapture camera;
+    static final String STRSAVEPATH = Environment.
+            getExternalStorageDirectory()+"/odometer/";
+
+    static final String SAVEFILEPATH = "Logger.txt";
+
+    private String folder = null;
+    private int seq;
+
+    final static int MAX_FRAME = 151;
+
+    public void init() {
+        folder = STRSAVEPATH + "data/01/images";
+        seq = 0;
+    }
+
+    double getFocal() {
+        return 718.8560;
+    }
+
+    double getScale() {
+        return 1;
+    }
+
+    Point getPrinciplePoint() {
+        return new Point(607.1928, 185.2157);
+    }
+
+    Mat capture() {
+
+        if(seq >= MAX_FRAME)
+            return null;
+
+        String filename = null;
+
+        filename = folder + String.format("/%06d.png", seq++);
+
+        Mat grayImage = imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
+
+//        cvtColor(colorImage, grayImage, COLOR_BGR2GRAY);
+
+        return grayImage;
+    }
+
+}

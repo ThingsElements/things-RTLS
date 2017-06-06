@@ -31,6 +31,10 @@
             android:label="@string/title_login">
         </activity>
 
+        <activity android:name=".app.CVCameraMode"
+            android:label="@string/title_odometer_mode">
+        </activity>
+
     </application>
 
 </manifest>
