@@ -6,9 +6,8 @@
     <FrameLayout
         android:id="@+id/camera_preview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        />
+        android:layout_height="390sp"
+        android:layout_alignParentTop="true"/>
 
         <!--<SurfaceView-->
             <!--android:id="@+id/surfaceView"-->
@@ -17,8 +16,182 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="">
+        android:layout_height="60sp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/camera_preview"
+        android:background="@color/CameraTextBackground">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.57"
+            android:orientation="vertical"
+            android:paddingLeft="13sp"
+            android:paddingTop="6sp"
+            android:paddingBottom="6sp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="44sp"
+                    android:layout_height="match_parent"
+                    android:text="- X"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvSensorX"
+                    android:layout_width="75sp"
+                    android:layout_height="match_parent"
+                    android:text="1.999992"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="44sp"
+                    android:layout_height="match_parent"
+                    android:text="- Y"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvSensorY"
+                    android:layout_width="75sp"
+                    android:layout_height="match_parent"
+                    android:text="1.999992"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="44sp"
+                    android:layout_height="match_parent"
+                    android:text="- Z"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvSensorZ"
+                    android:layout_width="75sp"
+                    android:layout_height="match_parent"
+                    android:text="1.999992"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="44sp"
+                    android:layout_height="match_parent"
+                    android:text="- Yaw"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvSensorYaw"
+                    android:layout_width="75sp"
+                    android:layout_height="match_parent"
+                    android:text="1.999992"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="44sp"
+                    android:layout_height="match_parent"
+                    android:text="- Pitch"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvSensorPitch"
+                    android:layout_width="75sp"
+                    android:layout_height="match_parent"
+                    android:text="-1.999992"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="44sp"
+                    android:layout_height="match_parent"
+                    android:text="- Roll"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvSensorRoll"
+                    android:layout_width="75sp"
+                    android:layout_height="match_parent"
+                    android:text="1.999992"
+                    android:textColor="@color/CameraLabelText"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/loFlotter"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4">
+
+        </LinearLayout>
 
     </LinearLayout>
 

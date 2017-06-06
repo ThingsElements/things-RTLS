@@ -3,6 +3,8 @@ package com.example.hatio.things_rtls.app;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hatio.things_rtls.R;
@@ -20,19 +23,24 @@ public class CameraMode extends Fragment {
     private Context mContext = this.getContext();
     private static Camera mCamera;
     private CameraPreview mPreview;
-    private boolean runThread = false;
-    public static Toast mToast;
+
+    TextView tvGyroX, tvGyroY, tvGyroZ, tvAccelX, tvAccelY, tvAccelZ, tvMagneX, tvMagneY, tvMagneZ;
+
+    private SensorManager mSensorManager;
+    private Sensor mGyroscope;
+    private Sensor accSensor;
+    private Sensor magneticSensor;
+
+    float gyroX = 0, gyroY = 0, gyroZ = 0;
+    float accelXValue = 0, accelYValue = 0, accelZValue = 0;
+    float magneX = 0, magneY = 0, magneZ = 0;
+
+    int count = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getCameraInstance();
-
-
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
 
@@ -40,6 +48,23 @@ public class CameraMode extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.view_camera_mode, container, false);
+//        tvAccelX = (TextView)findViewById(R.id.accelX);
+//        tvAccelY = (TextView)findViewById(R.id.accelY);
+//        tvAccelZ = (TextView)findViewById(R.id.accelZ);
+//
+//        tvMagneX = (TextView)findViewById(R.id.magneX);
+//        tvMagneY = (TextView)findViewById(R.id.magneY);
+//        tvMagneZ = (TextView)findViewById(R.id.magneZ);
+
+
+//        //센서 매니저 얻기
+//        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+//        //자이로스코프 센서(회전)
+//        mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+//        //엑셀러로미터 센서(가속)
+//        accSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        //자기장 센서
+//        magneticSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
         mContext = this.getContext();
         // 카메라 인스턴스 생성
@@ -61,9 +86,19 @@ public class CameraMode extends Fragment {
         return view;
     }
 
-    /**
-     * 카메라 하드웨어 지원 여부 확인
-     */
+    // TODO 센서 정확도에 대한 메소드 호출
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+
+
+
+
+
+
+
+    // 카메라 하드웨어 지원 여부 확인
     private boolean checkCameraHardware(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             // 카메라가 최소한 한개 있는 경우 처리
@@ -76,9 +111,7 @@ public class CameraMode extends Fragment {
         }
     }
 
-    /**
-     * 카메라 인스턴스를 안전하게 획득합니다
-     */
+    // 카메라 인스턴스를 안전하게 획득합니다
     public static void getCameraInstance() {
         releaseCameraAndPreview();
 
@@ -96,7 +129,7 @@ public class CameraMode extends Fragment {
 
     private static void releaseCameraAndPreview() {
         if (mCamera != null) {
-            mCamera.stopPreview();
+//            mCamera.stopPreview();
             mCamera.release();
             mCamera = null;
         }
