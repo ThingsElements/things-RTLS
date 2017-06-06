@@ -198,7 +198,6 @@ so manually move them:
 * javadoc/resources/titlebar_end.gif
 * javadoc/serialized-form.html
 * javadoc/stylesheet.css
-* sdk.iml
 
 Moved Files:
 ------------

@@ -20,6 +20,10 @@ import android.util.Log;
 
 import com.example.hatio.things_rtls.R;
 
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
+
 public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MainActivity";
     private final static int PERMISSIONS_REQUEST_CODE = 100;
@@ -29,6 +33,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         mActivity = this;
 
@@ -217,12 +222,30 @@ public class MainActivity extends ActionBarActivity {
         builder.create().show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        setContentView(R.layout.activity_main);
-        Intent i = new Intent(this, MainTap.class);
-        startActivity(i);
+    // OpenCV 로드
+    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+        @Override
+        public void onManagerConnected(int status) {
+            switch (status) {
+                case LoaderCallbackInterface.SUCCESS:
+                {
+                    Log.d("OpenCV", "OpenCV loaded successfully");
+                } break;
+                default:
+                {
+                    Log.d("OpenCV", "OpenCV loaded Fail");
+                    super.onManagerConnected(status);
+                } break;
+            }
+        }
+    };
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
     }
+
 }

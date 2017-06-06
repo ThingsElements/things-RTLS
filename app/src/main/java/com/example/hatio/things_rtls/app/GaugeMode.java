@@ -17,9 +17,10 @@ import java.util.Random;
 public class GaugeMode extends Fragment {
 
     private GaugeView mGaugeView;
-    private TextView tvValocity;
+    private TextView tvValocity, tvDistance, tvTime;
     private final Random RAND = new Random();
-
+    private float totalDistance = 0;
+    private int totalTime = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,6 +30,8 @@ public class GaugeMode extends Fragment {
         GaugeView gv = new GaugeView(view.getContext());
         mGaugeView = (GaugeView) view.findViewById(R.id.gauge_view1);
         tvValocity = (TextView)view.findViewById(R.id.tvValocityValue);
+        tvDistance = (TextView)view.findViewById(R.id.tvdistanceValue);
+        tvTime = (TextView)view.findViewById(R.id.tvTimeValue);
 
         mTimer.start();
 
@@ -36,20 +39,35 @@ public class GaugeMode extends Fragment {
     }
 
 
-    private final CountDownTimer mTimer = new CountDownTimer(300000, 2000) {
+    private final CountDownTimer mTimer = new CountDownTimer(300000, 1000) {
 
         @Override
         public void onTick(final long millisUntilFinished) {
-            float rndSpeed = RAND.nextFloat() * 15f;
+            float distance = RAND.nextFloat() * 3f;
 
-            mGaugeView.setTargetValue(rndSpeed);
+            totalTime += 1;
+            totalDistance += distance;
 
-            String str = String.format("%.1f",rndSpeed);
+            mGaugeView.setTargetValue(distance * 3.6f);
+            String str = String.format("%.1f", distance * 3.6);
 
-            tvValocity.setText(rndSpeed + "");
+            tvValocity.setText(str + "");
+            tvDistance.setText((int)totalDistance + "");
+            tvTime.setText(Timer(totalTime));
+
         }
 
         @Override
         public void onFinish() {}
+    };
+
+    String Timer(int time) {
+        String hour, minute, second;
+
+        hour = String.format("%02d", time / 3600);
+        minute = String.format("%02d", (time % 3600) / 60);
+        second = String.format("%02d", (time % 60));
+
+        return hour + ":" + minute + ":" + second;
     };
 }
