@@ -45,7 +45,7 @@ public class GaugeView extends View {
 	public static final float CENTER = 0.5f;
 	public static final boolean SHOW_OUTER_SHADOW = true;
 	public static final boolean SHOW_OUTER_BORDER = false;
-	public static final boolean SHOW_OUTER_RIM = true;
+	public static final boolean SHOW_OUTER_RIM = false;
 	public static final boolean SHOW_INNER_RIM = true;
 	public static final boolean SHOW_NEEDLE = true;
 	public static final boolean SHOW_SCALE = false;
@@ -56,31 +56,31 @@ public class GaugeView extends View {
 	public static final float OUTER_BORDER_WIDTH = 0.04f;
 	public static final float OUTER_RIM_WIDTH = 0.05f;
 	public static final float INNER_RIM_WIDTH = 0.06f;
-	public static final float INNER_RIM_BORDER_WIDTH = 0.005f;
+	public static final float INNER_RIM_BORDER_WIDTH = 0.002f;
 
-	public static final float NEEDLE_WIDTH = 0.035f;
-	public static final float NEEDLE_HEIGHT = 0.28f;
+	public static final float NEEDLE_WIDTH = 0.030f;
+	public static final float NEEDLE_HEIGHT = 0.32f;
 
 	public static final float SCALE_POSITION = 0.025f;
 	public static final float SCALE_START_VALUE = 0.0f;
-    public static final float SCALE_END_VALUE = 60.0f;
+    public static final float SCALE_END_VALUE = 15.0f;
 	public static final float SCALE_START_ANGLE = 30.0f;
-	public static final int SCALE_DIVISIONS = 12;
-	public static final int SCALE_SUBDIVISIONS = 5;
+	public static final int SCALE_DIVISIONS = 6;
+	public static final int SCALE_SUBDIVISIONS = 3;
 
 	public static final int[] OUTER_SHADOW_COLORS = { Color.argb(40, 255, 254, 187), Color.argb(20, 255, 247, 219),
 			Color.argb(5, 255, 255, 255) };
 	public static final float[] OUTER_SHADOW_POS = { 0.90f, 0.95f, 0.99f };
 
     public static final float[] RANGE_VALUES = {15.0f, 30.0f, 45.0f, 60.0f};
-    public static final int[] RANGE_COLORS = {Color.rgb(27, 202, 33), Color.rgb(232, 231, 33),
-												Color.rgb(232, 111, 33),  Color.rgb(231, 32, 43)};
+    public static final int[] RANGE_COLORS = {Color.rgb(255, 255, 255), Color.rgb(255, 255, 255),
+												Color.rgb(255, 255, 255),  Color.rgb(255, 255, 255)};
 
 	public static final int TEXT_SHADOW_COLOR = Color.argb(100, 0, 0, 0);
 	public static final int TEXT_VALUE_COLOR = Color.BLACK;
 	public static final int TEXT_UNIT_COLOR = Color.BLACK;
 	public static final float TEXT_VALUE_SIZE = 0.2f;
-	public static final float TEXT_UNIT_SIZE = 0.1f;
+	public static final float TEXT_UNIT_SIZE = 0.07f;
 
 	// *--------------------------------------------------------------------- *//
 	// Customizable properties
@@ -395,10 +395,15 @@ public class GaugeView extends View {
 
 	private Paint getDefaultInnerRimPaint() {
 		final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paint.setShader(new LinearGradient(mInnerRimRect.left, mInnerRimRect.top, mInnerRimRect.left, mInnerRimRect.bottom, new int[]{
-				Color.argb(255, 68, 73, 80), Color.argb(255, 91, 97, 105), Color.argb(255, 178, 180, 183), Color.argb(255, 188, 188, 190),
-				Color.argb(255, 84, 90, 100), Color.argb(255, 137, 137, 137)}, new float[]{0, 0.1f, 0.2f, 0.4f, 0.8f, 1},
+		paint.setShader(new LinearGradient(mInnerRimRect.top, mInnerRimRect.left, mInnerRimRect.bottom, mInnerRimRect.left, new int[]{
+				Color.rgb(62 ,62, 62), Color.rgb(220, 220, 220), Color.rgb(210, 210, 210), Color.rgb(220, 220, 220), Color.rgb(62 ,62, 62)}, new float[]{0, 0.4f, 0.5f, 0.6f, 1f},
 				TileMode.CLAMP));
+
+//		paint.setShader(new LinearGradient(mInnerRimRect.top, mInnerRimRect.left, mInnerRimRect.bottom, mInnerRimRect.left, new int[]{
+//				Color.argb(255, 68, 73, 80), Color.argb(255, 91, 97, 105), Color.argb(255, 178, 180, 183), Color.argb(255, 188, 188, 190),
+//				Color.argb(255, 84, 90, 100), Color.argb(255, 137, 137, 137)}, new float[]{0, 0.1f, 0.2f, 0.4f, 0.8f, 1},
+//				TileMode.CLAMP));
+
 		return paint;
 	}
 
@@ -435,9 +440,13 @@ public class GaugeView extends View {
 
 	public Paint getDefaultFaceShadowPaint() {
 		final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paint.setShader(new RadialGradient(0.5f, 0.5f, mFaceRect.width() / 2.0f, new int[]{Color.argb(60, 40, 96, 170),
-				Color.argb(80, 15, 34, 98), Color.argb(120, 0, 0, 0), Color.argb(140, 0, 0, 0)},
-				new float[]{0.60f, 0.85f, 0.96f, 0.99f}, TileMode.MIRROR));
+//		paint.setShader(new RadialGradient(0.5f, 0.5f, mFaceRect.width() / 2.0f, new int[]{Color.argb(60, 40, 96, 170),
+//				Color.argb(80, 15, 34, 98), Color.argb(120, 0, 0, 0), Color.argb(140, 0, 0, 0)},
+//				new float[]{0.60f, 0.85f, 0.96f, 0.99f}, TileMode.MIRROR));
+
+		paint.setShader(new LinearGradient(mInnerRimRect.left, mInnerRimRect.top, mInnerRimRect.left, mInnerRimRect.bottom,
+				Color.rgb(45, 45, 45), Color.rgb(133, 133, 133), TileMode.CLAMP ));
+
 		return paint;
 	}
 
@@ -473,16 +482,23 @@ public class GaugeView extends View {
 
 	public Paint getDefaultNeedleScrewPaint() {
 		final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paint.setShader(new RadialGradient(0.5f, 0.5f, 0.07f, new int[]{Color.rgb(171, 171, 171), Color.WHITE}, new float[]{0.05f,
-				0.9f}, TileMode.MIRROR));
+//		paint.setShader(new RadialGradient(0.5f, 0.5f, 0.07f, new int[]{Color.rgb(171, 171, 171), Color.WHITE}, new float[]{0.05f,
+//				0.9f}, TileMode.MIRROR));
+
+		paint.setShader(new LinearGradient(0.5f, 0.45f, 0.5f, 0.55f, new int[]{Color.rgb(221, 221, 221), Color.rgb(124, 124, 124), Color.rgb(221, 221, 221)}, new float[]{0f,
+				0.5f, 1f}, TileMode.CLAMP));
+
 		return paint;
 	}
 
 	public Paint getDefaultNeedleScrewBorderPaint() {
 		final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paint.setStyle(Paint.Style.STROKE);
-		paint.setColor(Color.argb(100, 81, 84, 89));
-		paint.setStrokeWidth(0.005f);
+//		paint.setColor(Color.argb(100, 81, 84, 89));
+
+		paint.setShader(new LinearGradient(0.5f, 0.45f, 0.5f, 0.52f, new int[]{Color.rgb(176, 176, 176), Color.rgb(48, 48, 48)}, new float[]{0f, 1f}, TileMode.CLAMP));
+
+		paint.setStrokeWidth(0.01f);
 		return paint;
 	}
 
@@ -694,7 +710,7 @@ public class GaugeView extends View {
 		for (int i = 0; i < totalTicks; i++) {
 			final float y1 = mScaleRect.top;
 			final float y2 = y1 + 0.015f; // height of division
-			final float y3 = y1 + 0.045f; // height of subdivision
+			final float y3 = y1 + 0.037f; // height of subdivision
 
 			final float value = getValueForTick(i);
             //final Paint paint = getRangePaint(mScaleStartValue + value);
@@ -787,7 +803,7 @@ public class GaugeView extends View {
 
 			// Draw the needle screw and its border
 			canvas.drawCircle(0.5f, 0.5f, 0.04f, mNeedleScrewPaint);
-			canvas.drawCircle(0.5f, 0.5f, 0.04f, mNeedleScrewBorderPaint);
+			canvas.drawCircle(0.5f, 0.5f, 0.045f, mNeedleScrewBorderPaint);
 		}
 	}
 

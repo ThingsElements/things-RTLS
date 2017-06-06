@@ -11,71 +11,187 @@
     <LinearLayout
         android:id="@+id/loGauge"
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
+        android:layout_height="390dp"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:background="@color/odometerGaugeBackground">
+        android:background="@color/odometerGaugeBackground"
+        android:gravity="center">
 
-        <com.example.hatio.things_rtls.assist.GaugeView
-            android:id="@+id/gauge_view1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+        <LinearLayout
+            android:id="@+id/loForGaugeSize"
+            android:layout_width="330sp"
+            android:layout_height="330sp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.example.hatio.things_rtls.assist.GaugeView
+                android:id="@+id/gauge_view1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/loStatus"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/loGauge"
         android:background="@color/odometerTextBackground">
 
-        <LinearLayout
-            android:id="@+id/loStatusOne"
-            android:layout_width="fill_parent"
-            android:layout_height="60sp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
             android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/loGauge">
+            android:layout_weight="3.2"
+            android:gravity="center">
 
             <TextView
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:textSize="30dp"
-                android:text="평균속도 :"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:textSize="25sp"
+                android:text="속도"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:id="@+id/tvValocityLabel"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/odometerLabelText"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_below="@id/tvValocityLabel"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10sp">
+
+
+                <TextView
+                    android:id="@+id/tvValocityValue"
+                    android:layout_width="52sp"
+                    android:layout_height="30sp"
+                    android:textSize="27sp"
+                    android:textStyle="bold"
+                    android:textAlignment="textEnd"
+                    android:text="11.2"
+                    android:textColor="@color/odometerNumberText"/>
+
+                <TextView
+                    android:id="@+id/tvValocitySign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30sp"
+                    android:textSize="20sp"
+                    android:text=" km"
+                    android:textColor="@color/odometerNumberText"/>
+            </LinearLayout>
+         </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#585858"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_average_speed"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:textSize="30dp"
-                android:text="20km"
-                />
-         </LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:textSize="25sp"
+                android:text="경과시간"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:id="@+id/tvTimeLabel"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/odometerLabelText"/>
 
-        <LinearLayout
-            android:id="@+id/loStatusTwo"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_below="@id/tvTimeLabel"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10sp">
+
+
+                <TextView
+                    android:id="@+id/tvTimeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30sp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:text="00:03:23"
+                    android:textColor="@color/odometerNumberText"
+                    android:layout_marginTop="3sp"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#585858"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
             android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/loGauge">
+            android:layout_weight="3.2"
+            android:gravity="center">
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:textSize="25sp"
+                android:text="이동거리"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:id="@+id/tvDistanceLabel"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/odometerLabelText"/>
 
-        <LinearLayout
-            android:id="@+id/loStatusThree"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/loGauge">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_below="@id/tvDistanceLabel"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10sp">
 
-        </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvdistanceValue"
+                    android:layout_width="44sp"
+                    android:layout_height="30sp"
+                    android:textSize="27sp"
+                    android:textStyle="bold"
+                    android:textAlignment="textEnd"
+                    android:text="123"
+                    android:textColor="@color/odometerNumberText"/>
+
+                <TextView
+                    android:id="@+id/tvDistanceSign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30sp"
+                    android:textSize="20sp"
+                    android:text=" m"
+                    android:textColor="@color/odometerNumberText"/>
+            </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

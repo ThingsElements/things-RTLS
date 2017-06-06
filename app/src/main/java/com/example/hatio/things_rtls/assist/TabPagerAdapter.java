@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.hatio.things_rtls.app.CameraMode;
 import com.example.hatio.things_rtls.app.GaugeMode;
 import com.example.hatio.things_rtls.app.Setting;
 
@@ -27,8 +28,8 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
         // Returning the current tabs
         switch (position) {
             case 0:
-//                CameraMode cameraMode = new CameraMode();
-//                return cameraMode;
+                CameraMode cameraMode = new CameraMode();
+                return cameraMode;
             case 1:
                 GaugeMode gaugeMode = new GaugeMode();
                 return gaugeMode;

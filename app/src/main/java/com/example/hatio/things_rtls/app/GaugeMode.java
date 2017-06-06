@@ -17,11 +17,8 @@ import java.util.Random;
 public class GaugeMode extends Fragment {
 
     private GaugeView mGaugeView;
-    private TextView tvSpeed;
-    private TextView tvAverageSpeed;
+    private TextView tvValocity;
     private final Random RAND = new Random();
-    private int averageSpeed = 0;
-    private int count = 0;
 
 
     @Override
@@ -30,27 +27,26 @@ public class GaugeMode extends Fragment {
         View view = inflater.inflate(R.layout.view_gauge_mode, container, false);
 
         GaugeView gv = new GaugeView(view.getContext());
-
         mGaugeView = (GaugeView) view.findViewById(R.id.gauge_view1);
-//        tvSpeed = (TextView) view.findViewById(R.id.tv_speed);
-        tvAverageSpeed = (TextView) view.findViewById(R.id.tv_average_speed);
+        tvValocity = (TextView)view.findViewById(R.id.tvValocityValue);
+
         mTimer.start();
 
         return view;
     }
 
 
-    private final CountDownTimer mTimer = new CountDownTimer(300000, 1000) {
+    private final CountDownTimer mTimer = new CountDownTimer(300000, 2000) {
 
         @Override
         public void onTick(final long millisUntilFinished) {
-            int rndSpeed = RAND.nextInt(61);
-            averageSpeed += rndSpeed;
-            count += 1;
+            float rndSpeed = RAND.nextFloat() * 15f;
 
             mGaugeView.setTargetValue(rndSpeed);
-//            tvSpeed.setText(rndSpeed + "km");
-//            tvAverageSpeed.setText((averageSpeed / count) + "km");
+
+            String str = String.format("%.1f",rndSpeed);
+
+            tvValocity.setText(rndSpeed + "");
         }
 
         @Override

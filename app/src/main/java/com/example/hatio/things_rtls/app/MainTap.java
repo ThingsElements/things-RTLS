@@ -44,29 +44,14 @@ public class MainTap extends ActionBarActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
-        //SlidingTabStrip in TabLayout
-        ViewGroup slidingTabStrip0 = (ViewGroup)tabLayout.getChildAt(0);
+        //탭 레이아웃 비율 조정
+        ViewGroup slidingTabStrip = (ViewGroup)tabLayout.getChildAt(0);
         //second tab in SlidingTabStrip
-        View tab0 = slidingTabStrip0.getChildAt(1);
-        LinearLayout.LayoutParams layoutParams0 = (LinearLayout.LayoutParams) tab0.getLayoutParams();
-        layoutParams0.weight = 1.1f;
-        tab0.setLayoutParams(layoutParams0);
+        View tab = slidingTabStrip.getChildAt(1);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tab.getLayoutParams();
+        layoutParams.weight = 1.15f;
+        tab.setLayoutParams(layoutParams);
 
-//        //SlidingTabStrip in TabLayout
-//        ViewGroup slidingTabStrip1 = (ViewGroup)tabLayout.getChildAt(1);
-//        //second tab in SlidingTabStrip
-//        View tab1 = slidingTabStrip1.getChildAt(1);
-//        LinearLayout.LayoutParams layoutParams1 = (LinearLayout.LayoutParams) tab1.getLayoutParams();
-//        layoutParams1.weight = 4;
-//        tab1.setLayoutParams(layoutParams1);
-//
-//        //SlidingTabStrip in TabLayout
-//        ViewGroup slidingTabStrip2 = (ViewGroup)tabLayout.getChildAt(2);
-//        //second tab in SlidingTabStrip
-//        View tab2 = slidingTabStrip2.getChildAt(1);
-//        LinearLayout.LayoutParams layoutParams2 = (LinearLayout.LayoutParams) tab1.getLayoutParams();
-//        layoutParams2.weight = 3;
-//        tab2.setLayoutParams(layoutParams2);
 
 
         // Initializing ViewPager
@@ -108,4 +93,5 @@ public class MainTap extends ActionBarActivity {
         });
 
     }
+
 }

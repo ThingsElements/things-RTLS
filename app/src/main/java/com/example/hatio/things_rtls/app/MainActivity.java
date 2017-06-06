@@ -34,6 +34,9 @@ public class MainActivity extends ActionBarActivity {
 
         getCameraPermission();
 
+        Intent i = new Intent(this, MainTap.class);
+        startActivity(i);
+
     }
 
     private void getCameraPermission() {
