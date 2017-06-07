@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "618143112477",
+    "firebase_url": "https://bluetoothscan.firebaseio.com",
+    "project_id": "bluetoothscan",
+    "storage_bucket": "bluetoothscan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618143112477:android:fd69a875518f3791",
+        "android_client_info": {
+          "package_name": "com.example.hatio.things_rtls"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618143112477-u2855n1dtbsodoufirklj7lfk21iscuj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlaoE3On4ZBTM84-8d8rxanlL9HJypcwg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

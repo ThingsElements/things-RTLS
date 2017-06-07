@@ -24,11 +24,31 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
+
 public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MainActivity";
     private final static int PERMISSIONS_REQUEST_CODE = 100;
 
     private ActionBarActivity mActivity;
+
+
+    // OpenCV 로드
+    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+        @Override
+        public void onManagerConnected(int status) {
+            switch (status) {
+                case LoaderCallbackInterface.SUCCESS:
+                {
+                    Log.d("OpenCV", "OpenCV loaded successfully");
+                } break;
+                default:
+                {
+                    Log.d("OpenCV", "OpenCV loaded Fail");
+                    super.onManagerConnected(status);
+                } break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +58,10 @@ public class MainActivity extends ActionBarActivity {
         mActivity = this;
 
         getCameraPermission();
+
+        if (!OpenCVLoader.initDebug()) {
+            // Handle initialization error
+        }
 
         Intent i = new Intent(this, MainTap.class);
         startActivity(i);
@@ -223,29 +247,19 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    // OpenCV 로드
-    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                {
-                    Log.d("OpenCV", "OpenCV loaded successfully");
-                } break;
-                default:
-                {
-                    Log.d("OpenCV", "OpenCV loaded Fail");
-                    super.onManagerConnected(status);
-                } break;
-            }
-        }
-    };
-
     @Override
     public void onResume()
     {
         super.onResume();
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
+
+        if (!OpenCVLoader.initDebug()) {
+            Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_2_0, this, mLoaderCallback);
+        } else {
+            Log.d(TAG, "OpenCV library found inside package. Using it!");
+            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
+
     }
 
 }
