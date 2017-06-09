@@ -94,4 +94,9 @@ public class MainTap extends ActionBarActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        // Block BackButton
+    }
+    
 }
