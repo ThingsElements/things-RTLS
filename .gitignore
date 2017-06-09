@@ -16,3 +16,7 @@ settings.gradle
 local.properties
 
 app/build.gradle
+
+settings.gradle
+
+app/build.gradle
