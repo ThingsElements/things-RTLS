@@ -12,10 +12,6 @@ import android.widget.TextView;
 
 import com.example.hatio.things_rtls.R;
 
-/**
- * Created by hatio on 2017. 6. 5..
- */
-
 public class ActionBarActivity extends AppCompatActivity {
 
     TextView tvTitle;
@@ -63,8 +59,6 @@ public class ActionBarActivity extends AppCompatActivity {
         Intent i;
         switch (item.getItemId()) {
             case 0:
-                i = new Intent(this, CVCameraMode.class);
-                startActivity(i);
                 break;
             case 1:
                 break;
@@ -80,6 +74,4 @@ public class ActionBarActivity extends AppCompatActivity {
     public void setActionBarTitle(String title) {
         tvTitle.setText(title);
     }
-
-
 }

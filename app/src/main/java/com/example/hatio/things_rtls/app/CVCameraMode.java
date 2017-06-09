@@ -7,7 +7,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.SurfaceView;
@@ -21,12 +20,9 @@ import com.example.hatio.things_rtls.odometer.Camera;
 import com.example.hatio.things_rtls.odometer.Odometer;
 import com.firebase.client.Firebase;
 
-import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
 
@@ -47,32 +43,6 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     int count = 0;
 
 
-    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this.getActivity()) {
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                {
-                    Log.i(TAG, "OpenCV loaded successfully");
-                    mOpenCvCameraView.enableView();
-                } break;
-                default:
-                {
-                    super.onManagerConnected(status);
-                } break;
-            }
-        }
-    };
-
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "called onCreate");
-        super.onCreate(savedInstanceState);
-
-
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -82,7 +52,7 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
         mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         //자이로스코프 센서(회전)
         mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-
+        mOpenCvCameraView.enableView();
     }
 
 
@@ -155,14 +125,6 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     public void onResume()
     {
         super.onResume();
-        if (!OpenCVLoader.initDebug()) {
-            Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_2_0, getActivity(), mLoaderCallback);
-        } else {
-            Log.d(TAG, "OpenCV library found inside package. Using it!");
-            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
-        }
-
 
         mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_FASTEST);
 
@@ -182,11 +144,11 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat gray = inputFrame.gray();
-        try{
-            mOdometer.estimate(gray, mCamera.getScale());
-        } catch(Throwable t) {
-            Log.e("ESTIMATE", t.getMessage());
-        }
+//        try{
+//            mOdometer.estimate(gray, mCamera.getScale());
+//        } catch(Throwable t) {
+//            Log.e("ESTIMATE", t.getMessage());
+//        }
 
         return gray;
     }

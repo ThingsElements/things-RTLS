@@ -59,13 +59,8 @@ public class MainActivity extends ActionBarActivity {
 
         getCameraPermission();
 
-        if (!OpenCVLoader.initDebug()) {
-            // Handle initialization error
-        }
-
         Intent i = new Intent(this, MainTap.class);
         startActivity(i);
-
     }
 
     private void getCameraPermission() {

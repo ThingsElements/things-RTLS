@@ -28,7 +28,7 @@ public class MainTap extends ActionBarActivity {
         // Initializing the TabLayout
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
-        // 탭에 새로운 뷰를 하나씩 추가.
+        // 탭 레이아웃에 새로운 뷰를 하나씩 추가. (이 뷰는 이미지임)
         View view1 = getLayoutInflater().inflate(R.layout.icon_view_selector_camera, null);
         view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.tab_selector_camera);
         tabLayout.addTab(tabLayout.newTab().setCustomView(view1));
