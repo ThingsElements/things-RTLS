@@ -10,7 +10,12 @@ import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Size;
 import org.opencv.core.TermCriteria;
+import org.opencv.features2d.DescriptorExtractor;
+import org.opencv.features2d.DescriptorMatcher;
 import org.opencv.features2d.FeatureDetector;
+
+import android.media.audiofx.AudioEffect;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -57,7 +62,7 @@ public class Odometer {
         return currFeatures;
     }
 
-    void featureTracking(Mat prevImage, Mat currImage, MatOfPoint2f prevFeatures, MatOfPoint2f currFeatures, MatOfByte status) {
+    double featureTracking(Mat prevImage, Mat currImage, MatOfPoint2f prevFeatures, MatOfPoint2f currFeatures, MatOfByte status) {
 
         // 트래킹에 실패한 포인트들은 버린다.
         MatOfFloat err = new MatOfFloat();
@@ -66,22 +71,31 @@ public class Odometer {
 
         calcOpticalFlowPyrLK(prevImage, currImage, prevFeatures, currFeatures, status, err, winSize, 3, termcrit, 0, 0.001);
 
+        double weight = 0;
         // KLT 트래킹에 실패하거나 프레임 바깥으로 벗어난 포인트들을 버린다.
-//        int indexCorrection = 0;
-//        byte[] statusArray = status.toArray();
-//        Point[] currFeaturesArray = currFeatures.toArray();
-//
-//        for(int i = 0;i < statusArray.length;i++) {
-//            Point pt = currFeaturesArray[i];
-//
-//            if((statusArray[i] == 0)||(pt.x < 0)||(pt.y < 0)) {
-//
-//                prevFeatures.toList().remove((i - indexCorrection));
-//                currFeatures.toList().remove((i - indexCorrection));
-//
-//                indexCorrection++;
-//            }
-//        }
+        int indexCorrection = 0;
+        byte[] statusArray = status.toArray();
+        Point[] currFeaturesArray = currFeatures.toArray();
+        Point[] prevFeaturesArray = prevFeatures.toArray();
+
+        for(int i = 0;i < statusArray.length;i++) {
+            Point pt = currFeaturesArray[i];
+
+            if((statusArray[i] == 0)||(pt.x < 0)||(pt.y < 0)) {
+
+                prevFeatures.toList().remove((i - indexCorrection));
+                currFeatures.toList().remove((i - indexCorrection));
+
+                indexCorrection++;
+            } else {
+                Point before = prevFeaturesArray[i - indexCorrection];
+                weight += (pt.x - before.x)*(pt.x - before.x) + (pt.y - before.y)*(pt.y - before.y);
+            }
+        }
+
+        if(prevFeaturesArray.length == 0)
+            return 0;
+        return weight / prevFeaturesArray.length;
     }
 
     MatOfPoint2f featureDetection(Mat image)  {
@@ -112,15 +126,32 @@ public class Odometer {
     }
 
     public int estimate(Mat currImage, double scale) {
+        Point[] prevFeaturesArray = prevFeatures.toArray();
 
         if(prevImage.empty()) {
             prevImage = currImage;
             prevFeatures = featureDetection(prevImage);
 
             return 0;
+        } else if(prevFeaturesArray.length < MIN_NUM_FEAT){
+            // 피쳐의 개 수가 작아지면 다시 검출함
+            featureDetection(prevImage);
+            if(prevFeaturesArray.length <= 0){
+                Log.e("","can't detect features.");
+            }
         }
 
-        featureTracking(prevImage, currImage, prevFeatures, currFeatures, status);
+        double weight = featureTracking(prevImage, currImage, prevFeatures, currFeatures, status);
+
+        if(prevFeaturesArray.length <= 0){
+            featureDetection(currImage);
+            prevImage = currImage;
+            return 0;
+        }
+
+        if(weight < 1000) {
+            return 0;
+        }
 
         E = findEssentialMat(currFeatures, prevFeatures, focal, pp, RANSAC, 0.999, 1.0, status);
         recoverPose(E, currFeatures, prevFeatures, R, t, focal, pp, status);

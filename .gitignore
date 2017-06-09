@@ -7,3 +7,12 @@ app/build
 /build
 .gradle
 /openCVLibrary320
+/openCVLibrary300
+settings.gradle
+
+app/build.gradle
+settings.gradle
+
+local.properties
+
+app/build.gradle
