@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.example.hatio.things_rtls.R;
 import com.example.hatio.things_rtls.assist.FirebaseSetValue;
+import com.example.hatio.things_rtls.assist.Position;
+import com.example.hatio.things_rtls.madgwickAHRS.MadgwickAHRS;
 import com.example.hatio.things_rtls.odometer.Camera;
 import com.example.hatio.things_rtls.odometer.Odometer;
 import com.firebase.client.Firebase;
@@ -24,6 +26,9 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.core.Mat;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class CVCameraMode extends Fragment implements CvCameraViewListener2, SensorEventListener {
@@ -35,13 +40,24 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     private MenuItem mItemSwitchCamera = null;
     private Camera mCamera = new Camera();
     private Odometer mOdometer = new Odometer(mCamera.getFocal(), mCamera.getPrinciplePoint());
-    private TextView tvSensorYaw, tvSensorPitch, tvSensorRoll;
+    private TextView tvSensorYaw, tvSensorPitch, tvSensorRoll, tvSensorX, tvSensorY;
     private SensorManager mSensorManager;
-    private Sensor mGyroscope;
-    private double yaw = 0, pitch = 0, roll = 0;
+    private Sensor accSensor, gyroSensor, magSensor;
     FirebaseSetValue firebaseSetValue;
-    int count = 0;
 
+    private float[] gyro = new float[3];
+    private float[] magnet = new float[3];
+    private float[] accel = new float[3];
+
+    private float[] gravity_data = new float[3];
+    private float[] linear_acceleration = new float[3];
+
+    MadgwickAHRS madgwickAHRS = new MadgwickAHRS(0.01f, 0.041f);
+    private Timer madgwickTimer = new Timer();
+    double lpPitch=0,lpRpll=0,lpYaw=0;
+    private Position avgPosition = new Position();
+    private long lastUpdate;
+    String phoneUUid = "sample";
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -51,8 +67,16 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
         //센서 매니저 얻기
         mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         //자이로스코프 센서(회전)
-        mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        gyroSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        accSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+        mSensorManager.registerListener(this, accSensor, 0);//every 5ms
+        mSensorManager.registerListener(this, gyroSensor, 0);
+        mSensorManager.registerListener(this, magSensor, 0);
+
         mOpenCvCameraView.enableView();
+        madgwickTimer.scheduleAtFixedRate(new DoMadgwick(), 1000, 1000);
     }
 
 
@@ -68,6 +92,8 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
         tvSensorYaw = (TextView)view.findViewById(R.id.tvSensorYaw);
         tvSensorPitch = (TextView)view.findViewById(R.id.tvSensorPitch);
         tvSensorRoll = (TextView)view.findViewById(R.id.tvSensorRoll);
+        tvSensorX = (TextView)view.findViewById(R.id.tvSensorX);
+        tvSensorY = (TextView)view.findViewById(R.id.tvSensorY);
 
         Firebase.setAndroidContext(getActivity());
 
@@ -86,23 +112,12 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     //센서값 얻어오기
     public void onSensorChanged(SensorEvent event) {
 
-
-
-        count += 1;
-
-        if(count >= 300) {
-            Sensor sensor = event.sensor;
-            if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-                yaw = yaw * 99 / 100 + (event.values[0] * 1000) * 1 / 100;
-                pitch = pitch * 99 / 100 + (event.values[1] * 1000) * 1 / 100;
-                roll = roll * 99 / 100 + (event.values[2] * 1000) * 1 / 100;
-                tvSensorYaw.setText(String.format("%.1f", yaw));
-                tvSensorPitch.setText(String.format("%.1f", pitch));
-                tvSensorRoll.setText(String.format("%.1f", roll));
-
-                firebaseSetValue.setPosition(yaw, pitch, roll, "sensor");
-                count = 0;
-            }
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            System.arraycopy(event.values, 0, accel, 0, 3);
+        } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+            System.arraycopy(event.values, 0, gyro, 0, 3);
+        } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+            System.arraycopy(event.values, 0, magnet, 0, 3);
         }
     }
 
@@ -126,8 +141,9 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     {
         super.onResume();
 
-        mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_FASTEST);
-
+        mSensorManager.registerListener(this, gyroSensor,SensorManager.SENSOR_DELAY_FASTEST);
+        mSensorManager.registerListener(this, accSensor,SensorManager.SENSOR_DELAY_FASTEST);
+        mSensorManager.registerListener(this, magSensor,SensorManager.SENSOR_DELAY_GAME);
     }
 
     public void onDestroy() {
@@ -142,10 +158,54 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     public void onCameraViewStopped() {
     }
 
+    class DoMadgwick extends TimerTask {
+
+        public void run() {
+            Long now = System.currentTimeMillis();
+            madgwickAHRS.SamplePeriod = (now - lastUpdate) / 1000.0f;
+            lastUpdate = now;
+            madgwickAHRS.Update(gyro[0], gyro[1], gyro[2], accel[0], accel[1],
+                    accel[2], magnet[0], magnet[1], magnet[2]);
+
+
+            // add the latest history sample:
+            lpPitch = lpPitch * 0.2 + madgwickAHRS.MadgPitch * 0.8;
+            lpRpll = lpRpll * 0.2 + madgwickAHRS.MadgRoll * 0.8;
+            lpYaw = lpYaw * 0.2 + madgwickAHRS.MadgYaw * 0.8;
+
+
+            try {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        final float alpha = (float) 0.8;
+
+                        gravity_data[0] = alpha * gravity_data[0] + (1 - alpha) * accel[0];
+                        gravity_data[1] = alpha * gravity_data[1] + (1 - alpha) * accel[1];
+                        gravity_data[2] = alpha * gravity_data[2] + (1 - alpha) * accel[2];
+
+                        linear_acceleration[0] = accel[0] - gravity_data[0];
+                        linear_acceleration[1] = accel[1] - gravity_data[1];
+                        linear_acceleration[2] = accel[2] - gravity_data[2];
+
+                        tvSensorX.setText(String.format("%.1f", avgPosition.getCenterX()));
+                        tvSensorY.setText(String.format("%.1f", avgPosition.getCenterY()));
+                        tvSensorYaw.setText(String.format("%.1f", Math.toRadians(madgwickAHRS.MadgYaw)));
+                        tvSensorPitch.setText(String.format("%.1f", Math.toRadians(madgwickAHRS.MadgPitch)));
+                        tvSensorRoll.setText(String.format("%.1f", Math.toRadians(madgwickAHRS.MadgRoll)));
+                    }
+                });
+
+                firebaseSetValue.setPosition(avgPosition.getCenterX(), avgPosition.getCenterY(), Math.toRadians(madgwickAHRS.MadgPitch),
+                                                Math.toRadians(madgwickAHRS.MadgRoll), Math.toRadians(madgwickAHRS.MadgYaw), phoneUUid);
+            } catch (Exception e) {
+            }
+        }
+    }
+
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat gray = inputFrame.gray();
-//        Core.transpose(gray, gray);
-//        Core.flip(gray, gray, 1);
+
 //        try{
 //            mOdometer.estimate(gray, mCamera.getScale());
 //        } catch(Throwable t) {

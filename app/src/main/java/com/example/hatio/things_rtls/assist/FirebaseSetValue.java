@@ -40,7 +40,7 @@ public class FirebaseSetValue {
 //////		myFirebaseRef.child("260").child("locations").child("bbbbb").child("props").child("yaw").setValue(yaw);
 //	}
 	
-	public void setPosition(double pitch, double roll, double yaw, String uuid) {
+	public void setPosition(double x, double y, double pitch, double roll, double yaw, String uuid) {
 		myFirebaseRef.child("260").child("locations").child(uuid).child("lastUpdateTime").setValue(System.currentTimeMillis());
 
 		myFirebaseRef.child("260").child("locations").child(uuid).child("updateInterval").setValue(50000);
