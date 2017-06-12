@@ -44,7 +44,7 @@ public class GetCameraPermission extends Activity{
                     ;//이미 퍼미션을 가지고 있음
                 } else {
                     //퍼미션 요청
-                    ActivityCompat.requestPermissions(this,
+                    ActivityCompat.requestPermissions((Activity) context,
                             new String[]{Manifest.permission.CAMERA,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             PERMISSIONS_REQUEST_CODE);
