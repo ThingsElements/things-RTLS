@@ -11,12 +11,16 @@
     <LinearLayout
         android:id="@+id/loGauge"
         android:layout_width="fill_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_alignParentTop="true"
         android:background="@color/odometerGaugeBackground"
+        android:gravity="center"
+        android:layout_weight="0.25">
 
         <LinearLayout
             android:id="@+id/loForGaugeSize"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:orientation="vertical"
             android:gravity="center">
 
@@ -32,10 +36,10 @@
     <LinearLayout
         android:id="@+id/loStatus"
         android:layout_width="fill_parent"
-        android:layout_height="60sp"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/loGauge"
+        android:background="@color/odometerTextBackground"
+        android:layout_weight="0.8">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -189,5 +193,5 @@
         </RelativeLayout>
 
     </LinearLayout>
-
+</LinearLayout>
 

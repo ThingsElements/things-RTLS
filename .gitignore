@@ -25,3 +25,4 @@ openCVLibrary*/src/main/aidl/org/opencv/engine/
 openCVLibrary*/src/main/res/
 openCVLibrary*/*.*
 openCVLibrary*/src/main/AndroidManifest.xml
+local.properties
