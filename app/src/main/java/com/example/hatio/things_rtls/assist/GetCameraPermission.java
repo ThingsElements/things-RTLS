@@ -132,10 +132,10 @@ public class GetCameraPermission extends Activity{
                 ContextCompat.checkSelfPermission(context,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        boolean cameraRationale = ActivityCompat.shouldShowRequestPermissionRationale(this,
+        boolean cameraRationale = ActivityCompat.shouldShowRequestPermissionRationale((Activity)context,
                 Manifest.permission.CAMERA);
         boolean writeExternalStorageRationale =
-                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                ActivityCompat.shouldShowRequestPermissionRationale((Activity)context,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
 
