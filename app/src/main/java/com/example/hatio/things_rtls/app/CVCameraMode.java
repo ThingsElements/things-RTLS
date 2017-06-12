@@ -144,6 +144,8 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat gray = inputFrame.gray();
+//        Core.transpose(gray, gray);
+//        Core.flip(gray, gray, 1);
 //        try{
 //            mOdometer.estimate(gray, mCamera.getScale());
 //        } catch(Throwable t) {
