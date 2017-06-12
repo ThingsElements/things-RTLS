@@ -8,7 +8,6 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +32,7 @@ import java.util.TimerTask;
 
 public class CVCameraMode extends Fragment implements CvCameraViewListener2, SensorEventListener {
 
-    private static final String TAG = "OCVSample::Activity";
-
     private CameraBridgeViewBase mOpenCvCameraView;
-    private boolean  mIsJavaCamera = true;
-    private MenuItem mItemSwitchCamera = null;
     private Camera mCamera = new Camera();
     private Odometer mOdometer = new Odometer(mCamera.getFocal(), mCamera.getPrinciplePoint());
     private TextView tvSensorYaw, tvSensorPitch, tvSensorRoll, tvSensorX, tvSensorY;
@@ -49,12 +44,8 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     private float[] magnet = new float[3];
     private float[] accel = new float[3];
 
-    private float[] gravity_data = new float[3];
-    private float[] linear_acceleration = new float[3];
-
     MadgwickAHRS madgwickAHRS = new MadgwickAHRS(0.01f, 0.041f);
     private Timer madgwickTimer = new Timer();
-    double lpPitch=0,lpRpll=0,lpYaw=0;
     private Position avgPosition = new Position();
     private long lastUpdate;
     String phoneUUid = "sample";
@@ -80,6 +71,7 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     }
 
 
+    // onCreateView가 onActivityCreated 보다 먼저 생성됨
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -87,6 +79,7 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
 
         mOpenCvCameraView = (CameraBridgeViewBase) view.findViewById(R.id.camera_preview);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
+        mOpenCvCameraView.setMaxFrameSize(640, 480);
         mOpenCvCameraView.setCvCameraViewListener(this);
 
         tvSensorYaw = (TextView)view.findViewById(R.id.tvSensorYaw);
@@ -96,22 +89,15 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
         tvSensorY = (TextView)view.findViewById(R.id.tvSensorY);
 
         Firebase.setAndroidContext(getActivity());
-
         firebaseSetValue = new FirebaseSetValue("260");
-
         firebaseSetValue.getFirebase();
-
-//        camera.set(CV_CAP_PROP_FRAME_WIDTH, 640);
-//        camera.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
-//        camera.set(CV_CAP_PROP_AUTOFOCUS, 0);
 
         return view;
     }
 
 
-    //센서값 얻어오기
+    /////////  센서에 관한 로직  /////////
     public void onSensorChanged(SensorEvent event) {
-
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             System.arraycopy(event.values, 0, accel, 0, 3);
         } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
@@ -123,12 +109,10 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
@@ -137,10 +121,8 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
-
         mSensorManager.registerListener(this, gyroSensor,SensorManager.SENSOR_DELAY_FASTEST);
         mSensorManager.registerListener(this, accSensor,SensorManager.SENSOR_DELAY_FASTEST);
         mSensorManager.registerListener(this, magSensor,SensorManager.SENSOR_DELAY_GAME);
@@ -152,12 +134,6 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
             mOpenCvCameraView.disableView();
     }
 
-    public void onCameraViewStarted(int width, int height) {
-    }
-
-    public void onCameraViewStopped() {
-    }
-
     class DoMadgwick extends TimerTask {
 
         public void run() {
@@ -167,27 +143,9 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
             madgwickAHRS.Update(gyro[0], gyro[1], gyro[2], accel[0], accel[1],
                     accel[2], magnet[0], magnet[1], magnet[2]);
 
-
-            // add the latest history sample:
-            lpPitch = lpPitch * 0.2 + madgwickAHRS.MadgPitch * 0.8;
-            lpRpll = lpRpll * 0.2 + madgwickAHRS.MadgRoll * 0.8;
-            lpYaw = lpYaw * 0.2 + madgwickAHRS.MadgYaw * 0.8;
-
-
             try {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-
-                        final float alpha = (float) 0.8;
-
-                        gravity_data[0] = alpha * gravity_data[0] + (1 - alpha) * accel[0];
-                        gravity_data[1] = alpha * gravity_data[1] + (1 - alpha) * accel[1];
-                        gravity_data[2] = alpha * gravity_data[2] + (1 - alpha) * accel[2];
-
-                        linear_acceleration[0] = accel[0] - gravity_data[0];
-                        linear_acceleration[1] = accel[1] - gravity_data[1];
-                        linear_acceleration[2] = accel[2] - gravity_data[2];
-
                         tvSensorX.setText(String.format("%.1f", avgPosition.getCenterX()));
                         tvSensorY.setText(String.format("%.1f", avgPosition.getCenterY()));
                         tvSensorYaw.setText(String.format("%.1f", Math.toRadians(madgwickAHRS.MadgYaw)));
@@ -201,6 +159,14 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
             } catch (Exception e) {
             }
         }
+    }
+
+
+    /////////  카메라에 관한 로직  /////////
+    public void onCameraViewStarted(int width, int height) {
+    }
+
+    public void onCameraViewStopped() {
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
