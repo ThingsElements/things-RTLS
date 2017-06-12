@@ -39,7 +39,7 @@ public class GaugeMode extends Fragment {
     }
 
 
-    private final CountDownTimer mTimer = new CountDownTimer(300000, 1000) {
+    private final CountDownTimer mTimer = new CountDownTimer(3000000, 1000) {
 
         @Override
         public void onTick(final long millisUntilFinished) {
