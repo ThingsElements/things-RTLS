@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import com.example.hatio.things_rtls.R;
 import com.example.hatio.things_rtls.assist.FirebaseSetValue;
-import com.example.hatio.things_rtls.assist.Position;
 import com.example.hatio.things_rtls.madgwickAHRS.MadgwickAHRS;
 import com.example.hatio.things_rtls.odometer.Camera;
 import com.example.hatio.things_rtls.odometer.Odometer;
+import com.example.hatio.things_rtls.assist.Position;
 import com.firebase.client.Firebase;
 
 import org.opencv.android.CameraBridgeViewBase;
@@ -180,4 +180,5 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
 
         return gray;
     }
+
 }
