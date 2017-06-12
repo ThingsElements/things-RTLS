@@ -3,11 +3,9 @@
 .idea
 .DS_Store
 .externalNativeBuild
+.gradle
 app/build
 /build
-.gradle
-settings.gradle
-app/build.gradle
 local.properties
 openCVLibrary*/src/main/java/org/opencv/android/**
 !openCVLibrary*/src/main/java/org/opencv/android/CameraBridgeViewBase.java
