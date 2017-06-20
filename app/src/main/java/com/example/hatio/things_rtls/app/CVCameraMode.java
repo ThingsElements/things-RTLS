@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
@@ -18,13 +19,17 @@ import com.example.hatio.things_rtls.assist.FirebaseSetValue;
 import com.example.hatio.things_rtls.madgwickAHRS.MadgwickAHRS;
 import com.example.hatio.things_rtls.odometer.Camera;
 import com.example.hatio.things_rtls.odometer.Odometer;
+import com.example.hatio.things_rtls.odometer.Preview;
 import com.example.hatio.things_rtls.assist.Position;
 import com.firebase.client.Firebase;
 
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,8 +38,6 @@ import java.util.TimerTask;
 public class CVCameraMode extends Fragment implements CvCameraViewListener2, SensorEventListener {
 
     private CameraBridgeViewBase mOpenCvCameraView;
-    private Camera mCamera = new Camera();
-    private Odometer mOdometer = new Odometer(mCamera.getFocal(), mCamera.getPrinciplePoint());
     private TextView tvSensorYaw, tvSensorPitch, tvSensorRoll, tvSensorX, tvSensorY;
     private SensorManager mSensorManager;
     private Sensor accSensor, gyroSensor, magSensor;
@@ -49,6 +52,12 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     private Position avgPosition = new Position();
     private long lastUpdate;
     String phoneUUid = "sample";
+
+    ///// Odometer /////
+    private Camera mCamera;
+    private Odometer mOdometer;
+    private Preview mPreview;
+    private boolean check = false;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -74,12 +83,11 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     // onCreateView가 onActivityCreated 보다 먼저 생성됨
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.view_camera_mode, container, false);
 
         mOpenCvCameraView = (CameraBridgeViewBase) view.findViewById(R.id.camera_preview);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
-        mOpenCvCameraView.setMaxFrameSize(640, 480);
+        mOpenCvCameraView.setMaxFrameSize(1280, 960);
         mOpenCvCameraView.setCvCameraViewListener(this);
 
         tvSensorYaw = (TextView)view.findViewById(R.id.tvSensorYaw);
@@ -170,15 +178,29 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
+        if(check == false){
+            mCamera = new Camera();
+            mOdometer = new Odometer(mCamera.getFocal(), mCamera.getPrinciplePoint());
+            mPreview = new Preview();
+            check = true;
+        }
         Mat gray = inputFrame.gray();
+        Mat grayT = gray.t();
+        Core.flip(gray.t(), grayT, 1);
+        Imgproc.resize(grayT, grayT, gray.size());
+        Mat rgb = new Mat(grayT.rows(), grayT.cols(), CvType.CV_8UC3);
+        try{
+            mOdometer.estimate(grayT, mCamera.getScale());
 
-//        try{
-//            mOdometer.estimate(gray, mCamera.getScale());
-//        } catch(Throwable t) {
-//            Log.e("ESTIMATE", t.getMessage());
-//        }
-
-        return gray;
+            Imgproc.cvtColor(grayT, rgb, Imgproc.COLOR_GRAY2RGB);
+            mPreview.redraw(rgb, mOdometer.getLastFeatures(), mOdometer.getCurrFeatures(), mOdometer.getR_f());
+        } catch (Throwable t) {
+            Log.e("ESTIMATE", t.getMessage());
+            mCamera = new Camera();
+            mOdometer = new Odometer(mCamera.getFocal(), mCamera.getPrinciplePoint());
+            mPreview = new Preview();
+        }
+        return rgb;
     }
 
 }
