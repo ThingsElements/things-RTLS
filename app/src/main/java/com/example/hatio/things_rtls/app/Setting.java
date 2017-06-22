@@ -1,7 +1,8 @@
 package com.example.hatio.things_rtls.app;
 
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.hatio.things_rtls.R;
-
-import static com.example.hatio.things_rtls.R.id.btnLogin;
 
 /**
  * Created by hatio on 2017. 6. 2..
@@ -38,10 +37,9 @@ public class Setting extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case btnLogin:
-                //TODO
-//                Intent i = new Intent(this, MainTap.class);
-//                startActivity(i);
+            case R.id.btnCalibration:
+                Intent i = new Intent(this.getContext(), Calibration.class);
+                startActivity(i);
                 break;
         }
     }

@@ -6,4 +6,9 @@
     <string name="title_camera_mode">Camera Mode</string>
     <string name="title_odometer_mode">Odometer Mode</string>
     <string name="title_login">Login</string>
+    <string name="title_calibration">Calibration</string>
+
+    <!-- Calibration -->
+    <string name="request_permission">This app needs camera permission.</string>
+    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
 </resources>

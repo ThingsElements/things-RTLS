@@ -35,6 +35,18 @@
             android:label="@string/title_login">
         </activity>
 
+        <activity android:name=".app.Calibration"
+            android:label="@string/title_calibration">
+        </activity>
+
+        <activity
+            android:name=".calibration.activity.SettingsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".calibration.activity.ResultsActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

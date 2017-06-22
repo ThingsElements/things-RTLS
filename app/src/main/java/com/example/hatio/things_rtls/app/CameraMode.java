@@ -104,6 +104,7 @@ public class CameraMode extends Fragment {
 
     @Override
     public void onPause() {
+        releaseCameraAndPreview();
         super.onPause();
         // 보통 안쓰는 객체는 onDestroy에서 해제 되지만 카메라는 확실히 제거해주는게 안전하다.
     }
