@@ -98,5 +98,9 @@ public class MainTap extends ActionBarActivity {
     public void onBackPressed() {
         // Block BackButton
     }
-    
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 }

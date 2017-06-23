@@ -57,8 +57,6 @@ public class Calibration extends AppCompatActivity {
 
         // Create our layout
         setContentView(R.layout.view_calibration);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         // Add our listeners
         this.addButtonListeners();

@@ -125,6 +125,10 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
 
+        if (mCamera != null) {
+            mCamera = null;
+        }
+
         mSensorManager.unregisterListener(this);
     }
 
