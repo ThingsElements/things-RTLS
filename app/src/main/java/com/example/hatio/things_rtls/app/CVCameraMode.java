@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 import com.example.hatio.things_rtls.R;
 import com.example.hatio.things_rtls.assist.FirebaseSetValue;
+import com.example.hatio.things_rtls.assist.Position;
 import com.example.hatio.things_rtls.madgwickAHRS.MadgwickAHRS;
 import com.example.hatio.things_rtls.odometer.Camera;
 import com.example.hatio.things_rtls.odometer.Odometer;
 import com.example.hatio.things_rtls.odometer.Preview;
-import com.example.hatio.things_rtls.assist.Position;
 import com.firebase.client.Firebase;
 
 import org.opencv.android.CameraBridgeViewBase;
@@ -54,7 +54,7 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
     String phoneUUid = "sample";
 
     ///// Odometer /////
-    private Camera mCamera;
+    private static Camera mCamera = new Camera();
     private Odometer mOdometer;
     private Preview mPreview;
     private boolean check = false;
@@ -183,8 +183,7 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         if(check == false){
-            mCamera = new Camera();
-            mOdometer = new Odometer(mCamera.getFocal(), mCamera.getPrinciplePoint());
+            mOdometer = new Odometer(Camera.getFocal(), Camera.getPrinciplePoint());
             mPreview = new Preview();
             check = true;
         }
@@ -194,17 +193,15 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
         Imgproc.resize(grayT, grayT, gray.size());
         Mat rgb = new Mat(grayT.rows(), grayT.cols(), CvType.CV_8UC3);
         try{
-            mOdometer.estimate(grayT, mCamera.getScale());
+            mOdometer.estimate(grayT, Camera.getScale());
 
             Imgproc.cvtColor(grayT, rgb, Imgproc.COLOR_GRAY2RGB);
             mPreview.redraw(rgb, mOdometer.getLastFeatures(), mOdometer.getCurrFeatures(), mOdometer.getR_f());
         } catch (Throwable t) {
             Log.e("ESTIMATE", t.getMessage());
-            mCamera = new Camera();
-            mOdometer = new Odometer(mCamera.getFocal(), mCamera.getPrinciplePoint());
+            mOdometer = new Odometer(Camera.getFocal(), Camera.getPrinciplePoint());
             mPreview = new Preview();
         }
         return rgb;
     }
-
 }

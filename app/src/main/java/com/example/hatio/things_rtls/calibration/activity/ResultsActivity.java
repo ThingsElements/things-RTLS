@@ -7,21 +7,25 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.hatio.things_rtls.R;
 import com.example.hatio.things_rtls.app.Calibration;
+import com.example.hatio.things_rtls.odometer.Camera;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 
 
 public class ResultsActivity extends AppCompatActivity {
 
     private TextView mTextResults;
     private SharedPreferences sharedPreferences;
+    Mat cal_mat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class ResultsActivity extends AppCompatActivity {
         // Run the async calibration
         run_calibration();
 
+
+
     }
 
     private void addButtonListeners() {
@@ -53,6 +59,9 @@ public class ResultsActivity extends AppCompatActivity {
         button_done.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Camera.setFocal(cal_mat.get(0, 0)[0]);
+                Camera.setPrinciplePoint(new Point(cal_mat.get(0, 2)[0], cal_mat.get(1, 2)[0]));
+
                 ResultsActivity.this.finish();
             }
         });
@@ -114,7 +123,7 @@ public class ResultsActivity extends AppCompatActivity {
 
                     // Get results from calibrator
                     double rms = Calibration.mCameraCalibrator.getAvgReprojectionError();
-                    Mat cal_mat = Calibration.mCameraCalibrator.getCameraMatrix();
+                    cal_mat = Calibration.mCameraCalibrator.getCameraMatrix();
                     Mat cal_dist = Calibration.mCameraCalibrator.getDistortionCoefficients();
 
                     // Get actual camera intrinsic values (api 23 and greater)
@@ -137,6 +146,9 @@ public class ResultsActivity extends AppCompatActivity {
                     dev_dist.put(1,0, distortion[1]); // kappa_1
                     dev_dist.put(2,0, distortion[2]); // kappa_2
                     dev_dist.put(3,0, distortion[3]); // kappa_3
+
+                    Log.d("============focal", ""+cal_mat.get(0,0)[0]);
+                    Log.d("============pp", ""+cal_mat.get(0, 2)[0]);
 
                     // Display the values
                     mTextResults.setText("Calibration was successful!!\n\n" +
@@ -179,7 +191,7 @@ public class ResultsActivity extends AppCompatActivity {
                 }
 
                 // Reset everything
-                Calibration.mCameraCalibrator.clearCorners();
+//                Calibration.mCameraCalibrator.clearCorners();
 
             }
         }.execute();
