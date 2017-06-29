@@ -23,9 +23,6 @@ public class MainActivity extends ActionBarActivity {
 
         GetCameraPermission getCameraPermission = new GetCameraPermission(this);
         getCameraPermission.getCameraPermission();
-
-        Intent i = new Intent(this, MainTap.class);
-        startActivity(i);
     }
 
     // OpenCV 로드
@@ -58,6 +55,9 @@ public class MainActivity extends ActionBarActivity {
             Log.d(TAG, "OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
+
+        Intent i = new Intent(this, MainTap.class);
+        startActivity(i);
     }
 
 }

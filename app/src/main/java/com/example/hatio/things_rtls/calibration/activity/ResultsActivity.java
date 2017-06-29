@@ -1,6 +1,7 @@
 package com.example.hatio.things_rtls.calibration.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -10,10 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hatio.things_rtls.R;
 import com.example.hatio.things_rtls.app.ActionBarActivity;
 import com.example.hatio.things_rtls.app.Calibration;
+import com.example.hatio.things_rtls.app.MainTap;
 import com.example.hatio.things_rtls.odometer.Camera;
 
 import org.opencv.core.CvType;
@@ -55,26 +58,39 @@ public class ResultsActivity extends ActionBarActivity {
     private void addButtonListeners() {
 
         // When the done button is pressed we should end the result activity
-        Button button_done = (Button) findViewById(R.id.button_done);
+        Button button_done = (Button) findViewById(R.id.button_back);
         button_done.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cal_mat != null){
-                    Camera.setFocal(cal_mat.get(0, 0)[0]);
-                    Camera.setPrinciplePoint(new Point(cal_mat.get(0, 2)[0], cal_mat.get(1, 2)[0]));
-                }
-
                 ResultsActivity.this.finish();
             }
         });
 
         // When this is clicked we should save the settings file
         Button button_save = (Button) findViewById(R.id.button_save);
-        button_save.setEnabled(false);
         button_save.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                if(cal_mat != null){
+                    SharedPreferences prefs = getSharedPreferences("camera_setting", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("focal", String.valueOf(cal_mat.get(0, 0)[0]));
+                    editor.putString("principlePoint1", String.valueOf(cal_mat.get(0, 2)[0]));
+                    editor.putString("principlePoint2", String.valueOf(cal_mat.get(1, 2)[0]));
+                    editor.commit();
+
+                    Camera.setFocal(cal_mat.get(0, 0)[0]);
+                    Camera.setPrinciplePoint(new Point(cal_mat.get(0, 2)[0], cal_mat.get(1, 2)[0]));
+
+                    Toast.makeText(getApplicationContext(), "Calibraion Value Save", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Calibraion Value is Unnormal, did not save", Toast.LENGTH_LONG).show();
+                }
+
+                Intent i = new Intent(ResultsActivity.this, MainTap.class);
+                startActivity(i);
+                ResultsActivity.this.finish();
             }
         });
     }

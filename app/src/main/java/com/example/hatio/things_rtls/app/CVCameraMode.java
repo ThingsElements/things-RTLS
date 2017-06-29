@@ -1,6 +1,7 @@
 package com.example.hatio.things_rtls.app;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -29,10 +30,13 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class CVCameraMode extends Fragment implements CvCameraViewListener2, SensorEventListener {
@@ -77,6 +81,15 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
 
         mOpenCvCameraView.enableView();
         madgwickTimer.scheduleAtFixedRate(new DoMadgwick(), 1000, 1000);
+
+
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("camera_setting", MODE_PRIVATE);
+        double focal = Double.parseDouble(prefs.getString("focal", "13841.24403"));
+        double principlePoint1 = Double.parseDouble(prefs.getString("principlePoint1", "639.5"));
+        double principlePoint2 = Double.parseDouble(prefs.getString("principlePoint2", "479.5"));
+
+        Camera.setFocal(focal);
+        Camera.setPrinciplePoint(new Point(principlePoint1, principlePoint2));
     }
 
 
