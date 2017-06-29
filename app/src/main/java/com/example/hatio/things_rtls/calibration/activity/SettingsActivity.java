@@ -117,6 +117,7 @@ public class SettingsActivity extends PreferenceActivity
                 CharSequence[] rez = new CharSequence[rezSize];
                 CharSequence[] rezValues = new CharSequence[rezSize];
 
+
                 // Loop through and create our entries
                 for(int i=0; i<sizes.length; i++) {
                     rez[i] = sizes[i].getWidth() + "x" + sizes[i].getHeight();
@@ -126,7 +127,7 @@ public class SettingsActivity extends PreferenceActivity
                 // Update our settings entry
                 cameraRez.setEntries(rez);
                 cameraRez.setEntryValues(rezValues);
-                cameraRez.setDefaultValue(rezValues[0]);
+                cameraRez.setDefaultValue(rezValues[20]);
 
                 // Get the possible focus lengths, on non-optical devices this only has one value
                 // https://developer.android.com/reference/android/hardware/camera2/CameraCharacteristics.html#LENS_INFO_AVAILABLE_FOCAL_LENGTHS
@@ -170,6 +171,7 @@ public class SettingsActivity extends PreferenceActivity
                     CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
                     StreamConfigurationMap streamConfigurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                     Size[] sizes = streamConfigurationMap.getOutputSizes(MediaRecorder.class);
+
 
                     // Our new rez entries
                     int rezSize = sizes.length;

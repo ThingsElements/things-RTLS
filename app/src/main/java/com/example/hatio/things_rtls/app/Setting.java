@@ -40,6 +40,7 @@ public class Setting extends Fragment implements View.OnClickListener {
             case R.id.btnCalibration:
                 Intent i = new Intent(this.getContext(), Calibration.class);
                 startActivity(i);
+                this.getActivity().finish();
                 break;
         }
     }

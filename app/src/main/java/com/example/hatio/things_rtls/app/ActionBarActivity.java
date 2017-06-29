@@ -14,7 +14,8 @@ import com.example.hatio.things_rtls.R;
 
 public class ActionBarActivity extends AppCompatActivity {
 
-    TextView tvTitle;
+    public static TextView tvTitle;
+    View actionbar;
 
     ///// 상단 서브 메뉴 바 /////
     @Override
@@ -30,7 +31,7 @@ public class ActionBarActivity extends AppCompatActivity {
 
         //layout을 가지고 와서 actionbar에 포팅을 시킵니다.
         LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
-        View actionbar = inflater.inflate(R.layout.action_bar, null);
+        actionbar = inflater.inflate(R.layout.action_bar, null);
 
         actionBar.setCustomView(actionbar);
 
@@ -43,7 +44,6 @@ public class ActionBarActivity extends AppCompatActivity {
         menu.add(0, 0, Menu.NONE, "Edit Profile");
         menu.add(0, 1, Menu.NONE, "Alarm List");
         menu.add(0, 2, Menu.NONE, "Logout");
-
 
         return true;
     }
@@ -63,6 +63,7 @@ public class ActionBarActivity extends AppCompatActivity {
             case 1:
                 break;
             case 2:
+                this.setActionBarTitle("Login");
                 i = new Intent(this, Login.class);
                 startActivity(i);
                 break;

@@ -7,9 +7,6 @@ import android.media.Image;
 import android.media.ImageReader;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,7 +28,7 @@ import org.opencv.imgproc.Imgproc;
  * Created by kang on 2017. 6. 22..
  */
 
-public class Calibration extends AppCompatActivity {
+public class Calibration extends ActionBarActivity {
 
     private static String TAG = "Calibration";
     private static final int RESULT_SETTINGS = 1;
@@ -82,6 +79,9 @@ public class Calibration extends AppCompatActivity {
 
         // Lets by default launch into the settings view
         startActivityForResult(intentSettings, RESULT_SETTINGS);
+
+        // Set Title
+        setActionBarTitle("Calibration");
     }
 
     private void addButtonListeners() {
@@ -101,6 +101,7 @@ public class Calibration extends AppCompatActivity {
         button_record.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // Add the corners
                 mCameraCalibrator.addCorners();
                 // Update the text view
@@ -114,6 +115,7 @@ public class Calibration extends AppCompatActivity {
     public void onResume() {
         // Pass to our super
         super.onResume();
+
         // Start the background thread
         mCameraManager.startBackgroundThread();
         // Open the camera
@@ -133,6 +135,7 @@ public class Calibration extends AppCompatActivity {
         // And we have not closed the current active camera
         mCameraManager.closeCamera();
         // Call the super
+
         super.onPause();
     }
 
@@ -196,31 +199,31 @@ public class Calibration extends AppCompatActivity {
     };
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_calibration, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            Intent i = new Intent(this, SettingsActivity.class);
-            startActivityForResult(i, RESULT_SETTINGS);
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_calibration, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//
+//            Intent i = new Intent(this, SettingsActivity.class);
+//            startActivityForResult(i, RESULT_SETTINGS);
+//
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -251,6 +254,6 @@ public class Calibration extends AppCompatActivity {
                 break;
 
         }
-
     }
+
 }

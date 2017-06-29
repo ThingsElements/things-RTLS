@@ -10,12 +10,14 @@
         <ListPreference
             android:key="prefCamera"
             android:title="Live Camera"
-            android:summary="Choose what camera to use" />
+            android:summary="Choose what camera to use"
+            android:defaultValue="0"/>
 
         <ListPreference
             android:key="prefSizeRaw"
             android:title="Raw Image Size"
-            android:summary="Set the incoming image size" />
+            android:summary="Set the incoming image size"
+            android:defaultValue="640x480"/>
 
         <ListPreference
             android:key="prefSizeResize"
