@@ -27,8 +27,48 @@
                 android:layout_weight="0.57"
                 android:orientation="vertical"
                 android:paddingLeft="13sp"
-                android:paddingTop="6sp"
                 android:paddingBottom="6sp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.6"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Quaternions"
+                        android:textColor="@color/CameraLabelText"
+                        android:textAlignment="textStart"
+                        android:textSize="17sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.6"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="44sp"
+                        android:layout_height="match_parent"
+                        android:text="- W"
+                        android:textColor="@color/CameraLabelText"
+                        android:textAlignment="textStart"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/tvSensorW"
+                        android:layout_width="75sp"
+                        android:layout_height="match_parent"
+                        android:text="1.999992"
+                        android:textColor="@color/CameraLabelText"
+                        android:textAlignment="textEnd"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,6 +143,36 @@
                         android:textColor="@color/CameraLabelText"
                         android:textAlignment="textEnd"
                         android:textSize="14sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/loFlotter"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.4"
+                android:paddingLeft="33sp"
+                android:paddingBottom="6sp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.6"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Euler Angle"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/CameraLabelText"
+                        android:textSize="17sp" />
 
                 </LinearLayout>
 
@@ -182,23 +252,8 @@
                         android:textSize="14sp"/>
 
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/loFlotter"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.4">
 
             </LinearLayout>
-            <!--<org.opencv.android.JavaCameraView-->
-                <!--android:id="@+id/loFlotter"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="fill_parent"-->
-                <!--android:layout_weight="0.4"/>-->
-
         </LinearLayout>
 
 </LinearLayout>

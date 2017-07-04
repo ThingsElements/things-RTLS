@@ -82,7 +82,7 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
         mOpenCvCameraView.enableView();
         madgwickTimer.scheduleAtFixedRate(new DoMadgwick(), 1000, 1000);
 
-
+        // 카메라 조정 값 가져오기
         SharedPreferences prefs = this.getActivity().getSharedPreferences("camera_setting", MODE_PRIVATE);
         double focal = Double.parseDouble(prefs.getString("focal", "13841.24403"));
         double principlePoint1 = Double.parseDouble(prefs.getString("principlePoint1", "639.5"));
@@ -151,6 +151,7 @@ public class CVCameraMode extends Fragment implements CvCameraViewListener2, Sen
         mSensorManager.registerListener(this, gyroSensor,SensorManager.SENSOR_DELAY_FASTEST);
         mSensorManager.registerListener(this, accSensor,SensorManager.SENSOR_DELAY_FASTEST);
         mSensorManager.registerListener(this, magSensor,SensorManager.SENSOR_DELAY_GAME);
+
     }
 
     public void onDestroy() {

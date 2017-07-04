@@ -1,7 +1,5 @@
 package com.example.hatio.things_rtls.odometer;
 
-import android.util.Log;
-
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint2f;
@@ -32,7 +30,7 @@ public class Preview {
         }
 
         if(R.rows() >0 && R.cols() >0){
-            Point origin = new Point(400, 400);
+            Point origin = new Point(50, 20);
 //            Log.d("==========R(0,0)", ""+R.get(0,0)[0]);
 //            Log.d("==========R(0,1)", ""+R.get(0,1)[0]);
 //            Log.d("==========R(0,2)", ""+R.get(0,2)[0]);
